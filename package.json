@@ -1,0 +1,21 @@
+{
+  "name": "assemble-test",
+  "description": "Testing assemble",
+  "version": "1.0.0",
+  "homepage": "",
+  "author": {
+    "name": "Sebi Kovacs",
+    "url": "sebastiankovacs.com"
+  },
+  "engines": {
+    "node": ">=0.8"
+  },
+  "scripts": {
+    "test": "grunt assemble"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "assemble": "~0.3.77",
+    "grunt-contrib-clean": "~0.4.0"
+  }
+}
