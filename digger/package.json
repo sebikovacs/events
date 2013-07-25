@@ -26,7 +26,8 @@
     "cheerio": "*",
     "handlebars" :"*",
     "moment": "*",
-    "tabletop": "*"
+    "tabletop": "*",
+    "underscore": "*"
   },
 
   "devDependencies": {},

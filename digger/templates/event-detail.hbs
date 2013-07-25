@@ -1,0 +1,38 @@
+---
+title: {{ band.name }}
+day: {{ band.day }}
+date: {{ dateFormat band.date format='YYYY-MM-DD HH:mm' }}
+image: {{ band.image }}
+venue: {{ band.location }}
+---
+
+<div class="row-fluid">
+  <div class="span3">
+    <ul class="unstyled">
+      {{#each band.nav}}
+      <li>
+        {{location}}
+
+        <ul class="unstyled">
+          {{#each links}}
+            <li><a href="{{link}}.html">{{time}} - {{name}}</a></li>
+          {{/each}}
+        </ul>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+  <div class="span9">
+    <h1>{{ band.name }}</h1>
+    <iframe
+      width="560"
+      height="315"
+      src="{{band.media}}"
+      frameborder="0"
+      allowfullscreen>
+    </iframe>
+    <p>{{ band.description }}</p>
+  </div>
+</div>
+
+

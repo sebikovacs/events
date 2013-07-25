@@ -1,0 +1,21 @@
+---
+title: {{ day.dayNo }}
+---
+<div class="row-fluid">
+  <div class="span3">
+    <ul class="unstyled">
+      {{#each day.nav}}
+      <li>
+        {{location}}
+        <ul class="unstyled">
+          {{#each links}}
+            <li><a href="event-details/{{link}}.html">{{time}} - {{name}}</a></li>
+          {{/each}}
+        </ul>
+        </li>
+      {{/each}}
+    </ul>
+  </div> <!-- span3 -->
+</div> <!-- row-fluid -->
+
+

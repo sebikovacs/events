@@ -31,7 +31,8 @@ module.exports = function(grunt) {
           layout: 'src/templates/layouts/default.hbs'
         },
         files: [
-          { expand: true, cwd: 'src/templates/event-details', src: ['*.hbs', '!index.hbs'], dest: 'dist/' },
+          { expand: true, cwd: 'src/templates/event-details', src: ['*.hbs', '!index.hbs'], dest: 'dist/event-details/' },
+          { expand: true, cwd: 'src/templates/day-details', src: ['*.hbs'], dest: 'dist/' },
           { expand: true, cwd: 'src/templates/event-details', src: ['index.hbs'], dest: './' }
         ]
       },

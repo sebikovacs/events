@@ -18,8 +18,11 @@ Handlebars.registerHelper('dateFormat', function(context, block) {
   };
 });
 
-var hbsBandTemplate = fs.readFileSync('./templates/band.hbs').toString();
+var hbsBandTemplate = fs.readFileSync('./templates/event-detail.hbs').toString();
+var hbsDayTemplate = fs.readFileSync('./templates/day-detail.hbs').toString();
+
 var bandTemplate = Handlebars.compile(hbsBandTemplate);
+var dayTemplate = Handlebars.compile(hbsDayTemplate);
 
 var rmDir = function(dirPath) {
   try { var files = fs.readdirSync(dirPath); }
@@ -44,13 +47,15 @@ var createSlug = function (input) {
   return input.replace(/(?:\w+ ?)/g, parameterizeMatch);
 };
 
-//MIKLOS GYÖRGY
+
 
 // cleanup media and posts
 rmDir('../src/templates/event-details');
+rmDir('../src/templates/day-details');
 
 //make folder
 fs.mkdirSync('../src/templates/event-details', '0755');
+fs.mkdirSync('../src/templates/day-details', '0755');
 
 var parameterizeDate = function (date, time) {
   var newDate = date.split('/').join('') + time.split(':').splice(0,2).join('');
@@ -58,7 +63,7 @@ var parameterizeDate = function (date, time) {
   return newDate;
 }
 
-var buildNav = function (data) {
+var buildDayNav = function (data) {
   var newArray = [];
 
   for (var i in data) {
@@ -71,7 +76,9 @@ var buildNav = function (data) {
                 var date = parameterizeDate(data[i].date, data[i].time);
 
                 var o = {
-                  link: title + '-' + date
+                  link: title + '-' + date,
+                  name: data[i].name,
+                  time: data[i].time,
                 };
 
                 newArray[j].links.push(o)
@@ -86,8 +93,13 @@ var buildNav = function (data) {
 
           var o = {
             location: data[i].location,
+
             links : [
-              {link: title + '-' + date}
+              {
+                link: title + '-' + date,
+                name: data[i].name,
+                time: data[i].time,
+              }
             ]
 
           }
@@ -98,20 +110,30 @@ var buildNav = function (data) {
   return newArray;
 }
 
-var writeFiles = function (data) {
-  var nav = buildNav(data);
+var extractYtVid = function (url) {
+  var YtCode = url.split('=')[1];
+  var media = 'http://www.youtube.com/embed/' + YtCode;
+
+  return media;
+}
+
+var writeEventDetailPages = function (data) {
+  var nav = buildDayNav(data);
 
   for (var i = 0; i < data.length; i++) {
     var title = createSlug(data[i].name);
     var date = parameterizeDate(data[i].date, data[i].time);
+    var media = extractYtVid(data[i].media);
+
     var band = {
-      name  :       data[i].name,
-      date  :       data[i].date,
-      day   :       18,
-      image :       '',
-      venue :       data[i].location,
+      name        : data[i].name,
+      date        : data[i].date,
+      day         : 18,
+      image       : '',
+      venue       : data[i].location,
       description : data[i].description,
-      nav: nav
+      media       : media,
+      nav         : nav
     }
 
      //compile template
@@ -126,11 +148,49 @@ var writeFiles = function (data) {
   }
 };
 
+var findUnique = function (data) {
+  var u = {}, a = [];
+   for(var i = 0, l = data.length; i < l; ++i){
+
+      if(u.hasOwnProperty(data[i].date)) {
+         continue;
+      }
+      a.push(data[i].date);
+      u[data[i].date] = 1;
+   }
+   return a;
+};
+
+var writeEventDayPages = function (data) {
+
+  var nav = buildDayNav(data);
+  var index = 1;
+
+  var days = findUnique(data);
+
+
+  for (var i = 0; i < days.length; i ++ ){
+    var dayNo = i+1;
+    var day = {
+      dayNo : dayNo,
+      nav: nav
+    }
+
+    //compile template
+    var compiledTemplate = dayTemplate({ 'day': day });
+
+    //filename
+    var fileName = 'day-' + dayNo;
+console.log(fileName)
+    //create file
+    fs.writeFileSync('../src/templates/day-details/' + fileName + '.hbs', compiledTemplate);
+  }
+}
 
 var parseData = function (data) {
 
-
-  writeFiles(data);
+  writeEventDayPages(data);
+  writeEventDetailPages(data);
 
 };
 
