@@ -1,21 +1,33 @@
 ---
-title: {{ day.dayNo }}
+title: Day {{ day.dayNo }}
 ---
-<div class="row-fluid">
-  <div class="span3">
-    <ul class="unstyled">
-      {{#each day.nav}}
-      <li>
-        {{location}}
-        <ul class="unstyled">
-          {{#each links}}
-            <li><a href="event-details/{{link}}.html">{{time}} - {{name}}</a></li>
-          {{/each}}
-        </ul>
-        </li>
-      {{/each}}
-    </ul>
-  </div> <!-- span3 -->
-</div> <!-- row-fluid -->
+<div class="span3">
+  <ul class="nav nav-tabs nav-stacked">
+    {{#each day.daysNav}}
+      <li><a href="{{linkHref}}.html">{{linkText}}</a></li>
+    {{/each}}
+  </ul>
+</div>
+<div class="span9">
+  <h3>Day {{ day.dayNo }} - {{dateFormat day.date format="Do MMMM YYYY"}}</h3>
+  <div class="row-fluid">
+    <div class="span3">
+      <ul class="unstyled">
+        {{#each day.gigsNav}}
+        <li>
+          {{location}}
+          <ul class="unstyled">
+            {{#each links}}
+              <li><a href="event-details/{{link}}.html">{{time}} - {{name}}</a></li>
+            {{/each}}
+          </ul>
+          </li>
+        {{/each}}
+      </ul>
+    </div> <!-- span3 -->
+  </div> <!-- row-fluid -->
+</div>
+
+
 
 
