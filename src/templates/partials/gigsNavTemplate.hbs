@@ -1,0 +1,10 @@
+<ul class="unstyled">
+	{{#each gigsNavTemplate.gigsNav}}
+		<h5>{{location}}</h5>
+		<ul class="unstyled">
+		{{#each nav}}
+			<li><a href="{{linkHref}}.html">{{linkText}}</a></li>
+		{{/each}}
+		</ul>
+	{{/each}}
+</ul>

@@ -3,14 +3,20 @@ title       : {{band.name}}
 date: {{ dateFormat band.date format='YYYY-MM-DD HH:mm' }}
 dayNo       : {{band.dayNo}}
 location    : {{band.location}}
-description : {{band.description}}
+description : Lorem ipsum
+
 media       : {{band.media}}
-gigsNav     :
-{{#each band.filteredGigs}}
--
-  linkText: {{linkText}}
-  linkHref: {{linkHref}}
-{{/each}}
+gigsNavTemplate:
+  gigsNav:
+  {{#each band.gigsNav}}
+  - location: {{location}}
+    nav:
+    {{#each links}}
+    -
+      linkText: {{time}} - {{name}}
+      linkHref: {{link}}
+    {{/each}}
+  {{/each}}
 daysNav     : daysNav
 
 ---
@@ -25,19 +31,7 @@ daysNav     : daysNav
   <h3>Day {{ band.dayNo }} - {{ dateFormat band.date format="Do MMMM YYYY" }}</h3>
   <div class="row-fluid">
     <div class="span3">
-      <ul class="unstyled">
-        {{#each band.gigsNav}}
-        <li>
-          {{location}}
-
-          <ul class="unstyled">
-            {{#each links}}
-              <li><a href="{{link}}.html">{{time}} - {{name}}</a></li>
-            {{/each}}
-          </ul>
-          </li>
-        {{/each}}
-      </ul>
+      {{{band.gigsNavTmpl}}}
     </div>
     <div class="span9">
       <h1>{{ band.name }}</h1>

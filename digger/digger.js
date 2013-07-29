@@ -52,15 +52,21 @@ var createSlug = function (input) {
 // cleanup assemble template files
 rmDir('../src/templates/event-details');
 rmDir('../src/templates/day-details');
-rmDir('../src/templates/partials');
+//rmDir('../src/templates/partials');
 
-//make folder
+//make folders
 fs.mkdirSync('../src/templates/event-details', '0755');
 fs.mkdirSync('../src/templates/day-details', '0755');
-fs.mkdirSync('../src/templates/partials', '0755');
+//fs.mkdirSync('../src/templates/partials', '0755');
 
 var parameterizeDate = function (date, time) {
-  var newDate = date.split('/').join('') + time.split(':').splice(0,2).join('');
+
+  var newDate = new Date(date);
+  var splitTime = time.split(':');
+
+  newDate.setHours(splitTime[0]);
+  newDate.setMinutes(splitTime[1]);
+  newDate = moment(newDate).format('YYYY-MM-DD-HH-mm');
 
   return newDate;
 }
@@ -78,7 +84,7 @@ var buildGigsNav = function (data) {
                 var date = parameterizeDate(data[i].date, data[i].time);
 
                 var o = {
-                  link: title + '-' + date,
+                  link: date + '-' + title  ,
                   name: data[i].name,
                   time: data[i].time,
                 };
@@ -98,7 +104,7 @@ var buildGigsNav = function (data) {
             date: data[i].date,
             links : [
               {
-                link: title + '-' + date,
+                link: date + '-' + title,
                 name: data[i].name,
                 time: data[i].time,
               }
@@ -108,7 +114,7 @@ var buildGigsNav = function (data) {
           newArray.push(o);
       }
   }
-  console.log(newArray)
+
   return newArray;
 }
 
@@ -193,7 +199,7 @@ var writeEventDetailPages = function (data) {
       dayNo++;
     }
 
-
+    console.log(filteredGigs);
     var band = {
       name        : data[i].name,
       date        : data[i].date,
@@ -203,22 +209,22 @@ var writeEventDetailPages = function (data) {
       description : data[i].description,
       media       : media,
       gigsNav     : filteredGigs,
-      daysNav     : daysNav
+      daysNav     : daysNav,
+      gigsNavTmpl: '{{> gigsNavTemplate}}'
     }
+
 
      //compile template
      var compiledTemplate = bandTemplate({ 'band': band });
 
      //filename
-     var fileName = title + '-' + date;
+     var fileName = date + '-' + title  ;
 
      //create file
      fs.writeFileSync('../src/templates/event-details/' + fileName + '.hbs', compiledTemplate);
 
   }
 };
-
-
 
 var writeEventDayPages = function (data) {
 
@@ -237,7 +243,8 @@ var writeEventDayPages = function (data) {
       date        : days[i],
       dayNo       : dayNo,
       gigsNav     : fiteredGigsNav,
-      daysNav     : daysNav
+      daysNav     : daysNav,
+      gigsNavTmpl: '{{> gigsNavTemplate}}'
     }
 
     //compile template
