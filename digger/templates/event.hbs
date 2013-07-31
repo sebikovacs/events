@@ -1,0 +1,25 @@
+---
+title       : {{band.name}}
+daysnav:
+{{#each band.daysNav}}
+- name: {{linkText}}
+  link: {{{linkHref}}}
+{{/each}}
+description:
+  description: >
+    {{band.description}}
+  media: {{band.media}}
+  name: {{band.name}}
+gigsnav:
+{{#each band.gigsNav}}
+- location: {{location}}
+  gigs:
+{{#each links}}
+  - bandname: {{time}} - {{name}}
+    link: {{{link}}}
+{{/each}}
+{{/each}}
+---
+{{{band.daysNavTmpl}}}
+{{{band.gigsNavTmpl}}}
+{{{band.descriptionTmpl}}}

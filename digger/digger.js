@@ -18,13 +18,12 @@ Handlebars.registerHelper('dateFormat', function(context, block) {
   };
 });
 
-var hbsBandTemplate = fs.readFileSync('./templates/event-detail.hbs').toString();
-var hbsDayTemplate = fs.readFileSync('./templates/day-detail.hbs').toString();
-var hbsDaysNavTemplate = fs.readFileSync('./templates/days-nav.hbs').toString();
+var hbsBandTemplate = fs.readFileSync('./templates/event.hbs').toString();
+var hbsDayTemplate = fs.readFileSync('./templates/day.hbs').toString();
 
 var bandTemplate = Handlebars.compile(hbsBandTemplate);
 var dayTemplate = Handlebars.compile(hbsDayTemplate);
-var daysNavTemplate = Handlebars.compile(hbsDaysNavTemplate);
+
 
 var rmDir = function(dirPath) {
   try { var files = fs.readdirSync(dirPath); }
@@ -50,14 +49,10 @@ var createSlug = function (input) {
 };
 
 // cleanup assemble template files
-rmDir('../src/templates/event-details');
-rmDir('../src/templates/day-details');
-//rmDir('../src/templates/partials');
+rmDir('../src/templates/pages');
 
 //make folders
-fs.mkdirSync('../src/templates/event-details', '0755');
-fs.mkdirSync('../src/templates/day-details', '0755');
-//fs.mkdirSync('../src/templates/partials', '0755');
+fs.mkdirSync('../src/templates/pages', '0755');
 
 var parameterizeDate = function (date, time) {
 
@@ -118,7 +113,7 @@ var buildGigsNav = function (data) {
   return newArray;
 }
 
-var buildDaysNav = function (data, flag) {
+var buildDaysNav = function (data) {
   //create 2 different left side navs
   var daysArr = findUnique(data);
   var days = [];
@@ -133,12 +128,11 @@ var buildDaysNav = function (data, flag) {
       linkText: 'Day ' + index
     }
 
-    if (flag == true) {
-      obj = {
-        linkHref: '../day-' + index,
-        linkText: 'Day ' + index
-      }
+    obj = {
+      linkHref: 'day-' + index,
+      linkText: 'Day ' + index
     }
+
 
 
     days.push(obj);
@@ -182,8 +176,9 @@ var filterGigsByDate = function (gigsNav, date) {
 }
 
 var writeEventDetailPages = function (data) {
+  console.log('Write event detail pages...')
   var gigsNav = buildGigsNav(data);
-  var daysNav = buildDaysNav(data, true);
+  var daysNav = buildDaysNav(data);
   var dateCache;
   var dayNo = 0;
 
@@ -199,7 +194,6 @@ var writeEventDetailPages = function (data) {
       dayNo++;
     }
 
-    console.log(filteredGigs);
     var band = {
       name        : data[i].name,
       date        : data[i].date,
@@ -210,7 +204,9 @@ var writeEventDetailPages = function (data) {
       media       : media,
       gigsNav     : filteredGigs,
       daysNav     : daysNav,
-      gigsNavTmpl: '{{> gigsNavTemplate}}'
+      gigsNavTmpl: '{{> gigsnav}}',
+      daysNavTmpl: '{{> daysnav}}',
+      descriptionTmpl: '{{> description}}'
     }
 
 
@@ -221,13 +217,13 @@ var writeEventDetailPages = function (data) {
      var fileName = date + '-' + title  ;
 
      //create file
-     fs.writeFileSync('../src/templates/event-details/' + fileName + '.hbs', compiledTemplate);
-
+     fs.writeFileSync('../src/templates/pages/' + fileName + '.hbs', compiledTemplate);
   }
+  console.log('OK')
 };
 
 var writeEventDayPages = function (data) {
-
+  console.log('Writing Event Day pages...')
   var gigsNav = buildGigsNav(data);
   var daysNav = buildDaysNav(data);
 
@@ -244,7 +240,8 @@ var writeEventDayPages = function (data) {
       dayNo       : dayNo,
       gigsNav     : fiteredGigsNav,
       daysNav     : daysNav,
-      gigsNavTmpl: '{{> gigsNavTemplate}}'
+      gigsNavTmpl: '{{> gigsnav}}',
+      daysNavTmpl: '{{> daysnav}}'
     }
 
     //compile template
@@ -254,8 +251,9 @@ var writeEventDayPages = function (data) {
     var fileName = 'day-' + dayNo;
 
     //create file
-    fs.writeFileSync('../src/templates/day-details/' + fileName + '.hbs', compiledTemplate);
+    fs.writeFileSync('../src/templates/pages/' + fileName + '.hbs', compiledTemplate);
   }
+  console.log('OK')
 }
 
 

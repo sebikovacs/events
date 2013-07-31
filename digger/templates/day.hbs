@@ -1,0 +1,21 @@
+---
+title: Day {{ day.dayNo }}
+daysnav:
+{{#each day.daysNav}}
+- name: {{linkText}}
+  link: {{{linkHref}}}
+{{/each}}
+gigsnav:
+{{#each day.gigsNav}}
+- location: {{location}}
+  gigs:
+{{#each links}}
+  - bandname: {{time}} - {{name}}
+    link: {{{link}}}
+{{/each}}
+{{/each}}
+---
+{{{day.daysNavTmpl}}}
+{{{day.gigsNavTmpl}}}
+
+

@@ -1,0 +1,14 @@
+<div class="span3">
+  <ul class="unstyled">
+  {{#each gigsnav}}
+    <li>
+      <strong>{{location}}</strong>
+      <ul class="unstyled">
+        {{#each gigs}}
+        <li><a href="{{link}}.html">{{time}} - {{bandname}}</a></li>
+        {{/each}}
+      </ul>
+    </li>
+  {{/each}}
+  </ul>
+</div>
