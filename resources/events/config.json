@@ -1,0 +1,29 @@
+{
+	"type": "Collection",
+	"properties": {
+		"name": {
+			"name": "name",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "name",
+			"order": 0
+		},
+		"googleKey": {
+			"name": "googleKey",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "googleKey",
+			"order": 1
+		},
+		"uid": {
+			"name": "uid",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "uid",
+			"order": 2
+		}
+	}
+}

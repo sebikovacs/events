@@ -16,6 +16,8 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "assemble": "~0.3.77",
-    "grunt-contrib-clean": "~0.4.0"
+    "grunt-contrib-clean": "~0.4.0",
+    "livereload": "*",
+    "deployd": "*"
   }
 }

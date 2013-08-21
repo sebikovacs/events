@@ -1,7 +1,14 @@
+var eventData = require('./constants.js')
 var Tabletop = require('tabletop');
+var path = require('path');
 var fs = require('fs');
 var Handlebars = require('handlebars');
 var moment = require('moment');
+
+console.log('------------')
+console.log('eventData');
+console.log(eventData.constants.key);
+console.log('------------')
 
 var key = "0AhwOls2FTsDFdFVWUjE1R2djOHVDS3N0bkpsdzdRZnc";
 
@@ -18,8 +25,8 @@ Handlebars.registerHelper('dateFormat', function(context, block) {
   };
 });
 
-var hbsBandTemplate = fs.readFileSync('./templates/event.hbs').toString();
-var hbsDayTemplate = fs.readFileSync('./templates/day.hbs').toString();
+var hbsBandTemplate = fs.readFileSync(__dirname + '/templates/event.hbs').toString();
+var hbsDayTemplate = fs.readFileSync(__dirname + '/templates/day.hbs').toString();
 
 var bandTemplate = Handlebars.compile(hbsBandTemplate);
 var dayTemplate = Handlebars.compile(hbsDayTemplate);
@@ -48,11 +55,18 @@ var createSlug = function (input) {
   return input.replace(/(?:\w+ ?)/g, parameterizeMatch);
 };
 
+var cwd = __dirname.split(path.sep);
+cwd.splice(cwd.length - 1, 1)
+cwd = cwd.join();
+
+var outputDirectoryName = cwd;
+var outputDirectory = cwd + '/';
+
 // cleanup assemble template files
-rmDir('../src/templates/pages');
+rmDir(outputDirectoryName);
 
 //make folders
-fs.mkdirSync('../src/templates/pages', '0755');
+fs.mkdirSync(outputDirectoryName, '0755');
 
 var parameterizeDate = function (date, time) {
 
@@ -214,10 +228,10 @@ var writeEventDetailPages = function (data) {
      var compiledTemplate = bandTemplate({ 'band': band });
 
      //filename
-     var fileName = date + '-' + title  ;
+     var fileName = date + '-' + title;
 
      //create file
-     fs.writeFileSync('../src/templates/pages/' + fileName + '.hbs', compiledTemplate);
+     fs.writeFileSync(outputDirectory + fileName + '.hbs', compiledTemplate);
   }
   console.log('OK')
 };
@@ -251,7 +265,7 @@ var writeEventDayPages = function (data) {
     var fileName = 'day-' + dayNo;
 
     //create file
-    fs.writeFileSync('../src/templates/pages/' + fileName + '.hbs', compiledTemplate);
+    fs.writeFileSync(outputDirectory + fileName + '.hbs', compiledTemplate);
   }
   console.log('OK')
 }

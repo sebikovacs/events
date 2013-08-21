@@ -1,0 +1,21 @@
+{
+	"type": "UserCollection",
+	"properties": {
+		"eventName": {
+			"name": "eventName",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "eventName",
+			"order": 0
+		},
+		"eventKey": {
+			"name": "eventKey",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "eventKey",
+			"order": 1
+		}
+	}
+}
