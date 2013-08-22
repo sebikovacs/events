@@ -57,10 +57,10 @@ var createSlug = function (input) {
 
 var cwd = __dirname.split(path.sep);
 cwd.splice(cwd.length - 1, 1)
-cwd = cwd.join();
+cwd = cwd.join('/');
 
-var outputDirectoryName = cwd;
-var outputDirectory = cwd + '/';
+var outputDirectoryName = cwd + '/src/templates/pages/events';
+var outputDirectory = cwd + '/src/templates/pages/events/';
 
 // cleanup assemble template files
 rmDir(outputDirectoryName);

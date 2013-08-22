@@ -65,7 +65,7 @@ $(document).ready(function () {
     }, 100);
   });
 
-	$('#submit-event').on('click', function (e) {
+	$('#create-event').on('click', function (e) {
 		e.preventDefault();
     var eventName = $(this).parent().find('input.event-name').val();
 
