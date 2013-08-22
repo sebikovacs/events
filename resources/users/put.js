@@ -2,10 +2,14 @@ var sys = require('sys');
 var fs = require('fs');
 var exec = require('child_process').exec;
 var child;
+
+console.log('=========');
 console.log(this);
+console.log('=========');
+
 var content = "exports.constants = {\n" +
-    "name: '" + this.eventName + " ',\n" +
-	"key: '" + this.eventKey + " '\n" + 
+    "name: '" + this.eventName + "',\n" +
+	"key: '" + this.eventKey + "'\n" + 
     "};";
 
 fs.writeFile('digger/constants.js', content, function(){

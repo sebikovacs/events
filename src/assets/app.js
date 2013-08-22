@@ -4,11 +4,17 @@ $(document).ready(function () {
   var key = null;
 
   dpd.users.me(function (result, error) {
+
     if (result && typeof result == 'object') {
+
       loggedin = true;
       user = result;
+      console.log(user.username);
+    } else {
+      console.log('not logged in')
     }
   });
+
 
 
 	$('#sign-up').on('click', function (e) {

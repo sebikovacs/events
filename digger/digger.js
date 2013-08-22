@@ -5,12 +5,7 @@ var fs = require('fs');
 var Handlebars = require('handlebars');
 var moment = require('moment');
 
-console.log('------------')
-console.log('eventData');
-console.log(eventData.constants.key);
-console.log('------------')
-
-var key = "0AhwOls2FTsDFdFVWUjE1R2djOHVDS3N0bkpsdzdRZnc";
+var key = eventData.constants.key;
 
 //  format an ISO date using Moment.js
 //  http://momentjs.com/
