@@ -5,9 +5,10 @@
  * Copyright (c) 2013 Upstage
  * Licensed under the MIT license.
  */
-var eventData = require('./digger/constants.js')
 
 'use strict';
+
+var eventData = require('./digger/constants.js')
 
 module.exports = function(grunt) {
 
@@ -32,7 +33,7 @@ module.exports = function(grunt) {
           layout: 'src/templates/layouts/default.hbs'
         },
         files: [
-          { expand: true, cwd: 'src/templates/pages/events', src: ['*.hbs'], dest: 'dist/' + eventData.constants.name },
+          { expand: true, cwd: 'src/templates/pages/events/' + eventData.constants.name , src: ['*.hbs'], dest: 'dist/' + eventData.constants.name },
           { expand: true, cwd: 'src/templates/pages', src: ['*.html'], dest: 'dist/' },
           //{ expand: true, cwd: 'src/templates/pages', src: ['index.hbs'], dest: './' }
         ]

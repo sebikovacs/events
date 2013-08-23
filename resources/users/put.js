@@ -3,10 +3,6 @@ var fs = require('fs');
 var exec = require('child_process').exec;
 var child;
 
-console.log('=========');
-console.log(this);
-console.log('=========');
-
 var content = "exports.constants = {\n" +
     "name: '" + this.eventName + "',\n" +
 	"key: '" + this.eventKey + "'\n" + 
@@ -25,7 +21,7 @@ fs.writeFile('digger/constants.js', content, function(){
       //run grunt
       var smallChild = exec("grunt", function (error, stdout, stderr) {
           sys.print('stdout: ' + stdout);
-          sys.print('stderr: ' + stderr);
+          sys.print('stderr: ' + stderr + '\n');
           
           if (error !== null) {
             console.log('exec error: ' + error);

@@ -9,13 +9,22 @@ $(document).ready(function () {
 
       loggedin = true;
       user = result;
-      console.log(user.username);
+
+      var signInText = $('.signed-in');
+      signInText.show().find('.username').html(user.username);
+      $('#sign-out').show();
+      $('.account').show();
+      $('.buttons a.sign-up').hide();
+      $('.buttons a.sign-in').hide();
+
     } else {
-      console.log('not logged in')
+      $('#sign-out').hide();
+      $('.signed-in').hide();
+      $('.account').hide();
+      $('.buttons a.sign-up').show();
+      $('.buttons a.sign-in').show();
     }
   });
-
-
 
 	$('#sign-up').on('click', function (e) {
 		e.preventDefault();
@@ -33,8 +42,10 @@ $(document).ready(function () {
 		})
 
 	});
+
 	$('#sign-in').on('click', function (e) {
   	e.preventDefault();
+
   	var email = $(this).parent().find('input[type=email]').val();
   	var password = $(this).parent().find('input[type=password]').val();
 
@@ -43,8 +54,9 @@ $(document).ready(function () {
   		password: password
   	}
   	dpd.users.login(data, function (result, error) {
-			if (!error) {
-        location.reload();
+
+      if (!error) {
+        window.location = 'file:///media/D/dev/events/dist/account.html';
       } else {
         console.log(error)
       }
@@ -55,8 +67,10 @@ $(document).ready(function () {
 	$('#sign-out').on('click', function (e) {
 		e.preventDefault();
 		dpd.users.logout(function (result, error) {
-      console.log('Log out');
-      console.log(result)
+
+      if (!error) {
+        location.reload();
+      }
     })
 	});
 
@@ -72,20 +86,26 @@ $(document).ready(function () {
   });
 
 	$('#create-event').on('click', function (e) {
-		e.preventDefault();
-    var eventName = $(this).parent().find('input.event-name').val();
+		var eventName;
+    e.preventDefault();
+    eventName = $(this).parent().find('input.event-name').val();
+    eventName = eventName.toLowerCase().replace(/\s+/g, '-');
 
-    var userObj = {
-      id: user.id,
-      eventName: eventName,
-      eventKey: key
-    }
+    // var userObj = {
+    //   id: user.id,
+    //   eventName: eventName,
+    //   eventKey: key
+    // }
 
-    dpd.users.put(userObj, function (result, error) {
-      console.log('put this shit on')
-      console.log(result);
-      console.log(error)
-    });
+    // dpd.users.put(userObj, function (result, error) {
+
+    //   if (!error) {
+    //     setTimeout(function() {
+    //       window.location = 'file:///media/D/dev/events/dist/' + userObj.eventName + '/day-1.html';
+    //     }, 6000);
+    //   }
+
+    // });
 	});
 
 
