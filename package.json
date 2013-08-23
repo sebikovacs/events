@@ -18,6 +18,7 @@
     "assemble": "~0.3.77",
     "grunt-contrib-clean": "~0.4.0",
     "livereload": "*",
-    "deployd": "*"
+    "deployd": "*",
+    "node-static": "*"
   }
 }

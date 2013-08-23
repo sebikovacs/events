@@ -91,6 +91,19 @@ $(document).ready(function () {
     eventName = $(this).parent().find('input.event-name').val();
     eventName = eventName.toLowerCase().replace(/\s+/g, '-');
 
+    $.ajax({
+      type: 'GET',
+      url:'./sign-in.html',
+      success: function (result) {
+        console.log('success');
+        console.log(result)
+      },
+      error: function (result) {
+        console.log('error');
+        console.log(result)
+      }
+    })
+
     // var userObj = {
     //   id: user.id,
     //   eventName: eventName,
