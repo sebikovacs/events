@@ -35,9 +35,15 @@ module.exports = function(grunt) {
         files: [
           { expand: true, cwd: 'src/templates/pages/events/' + eventData.constants.name , src: ['*.hbs'], dest: 'dist/' + eventData.constants.name },
           { expand: true, cwd: 'src/templates/pages', src: ['*.html'], dest: 'dist/' },
+
           //{ expand: true, cwd: 'src/templates/pages', src: ['index.hbs'], dest: './' }
         ]
       },
+      assets: {
+        files: [
+          { expand: true, cwd: 'src/assets/', src: ['*.css', '*.js'], dest: 'dist/assets/'}
+        ]
+      }
     },
 
     // Before generating any new files,
